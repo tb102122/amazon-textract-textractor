@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interfacing with trp2 &mdash; amazon-textract-textractor 1.0.0 documentation</title>
+  <title>Using AnalyzeExpense &mdash; amazon-textract-textractor 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
@@ -23,8 +23,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Signature Detection" href="signature_detection.html" />
-    <link rel="prev" title="Using Queries" href="using_queries.html" /> 
+    <link rel="next" title="Using AnalyzeID" href="using_analyze_id.html" />
+    <link rel="prev" title="Table data extraction to Excel" href="table_data_to_various_formats.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,16 +53,14 @@
 <li class="toctree-l2"><a class="reference internal" href="finding_words_within_a_document.html">Word Occurence within Document</a></li>
 <li class="toctree-l2"><a class="reference internal" href="exporting_form_data.html">Exporting Form Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="table_data_to_various_formats.html">Table data extraction to Excel</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using_analyze_expense.html">Using AnalyzeExpense</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using_analyze_id.html">Using AnalyzeID</a></li>
-<li class="toctree-l2"><a class="reference internal" href="using_queries.html">Using Queries</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Interfacing with trp2</a><ul>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using AnalyzeExpense</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Installation">Installation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Calling-Textract">Calling Textract</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Getting-the-trp2-document">Getting the trp2 document</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Conclusion">Conclusion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Parsing-the-output">Parsing the output</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="using_analyze_id.html">Using AnalyzeID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_queries.html">Using Queries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interfacing_with_trp2.html">Interfacing with trp2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="signature_detection.html">Signature Detection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="going_further.html">Going further</a></li>
 </ul>
@@ -92,9 +90,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../examples.html">Examples</a> &raquo;</li>
-      <li>Interfacing with trp2</li>
+      <li>Using AnalyzeExpense</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/notebooks/interfacing_with_trp2.ipynb.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/notebooks/using_analyze_expense.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -381,31 +379,47 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<section id="Interfacing-with-trp2">
-<h1>Interfacing with trp2<a class="headerlink" href="#Interfacing-with-trp2" title="Permalink to this heading"></a></h1>
-<p>The Textract response parser was the preferred way of handling Textract API output before the release of Textractor. If your current workflow uses the older library, you can easily reuse their functions through the compatibility API.</p>
+<section id="Using-AnalyzeExpense">
+<h1>Using AnalyzeExpense<a class="headerlink" href="#Using-AnalyzeExpense" title="Permalink to this heading"></a></h1>
+<p>Textract AnalyzeExpense is an API dedicated to processing Invoice and Receipts documents. It is available as a synchronous or asynchronous API.</p>
 <section id="Installation">
 <h2>Installation<a class="headerlink" href="#Installation" title="Permalink to this heading"></a></h2>
-<p>To begin, install the <code class="docutils literal notranslate"><span class="pre">amazon-textract-textractor</span></code> package using pip.</p>
+<p>To begin, install the amazon-textract-textractor package using pip.</p>
 <p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">amazon-textract-textractor</span></code></p>
-<p>There are various sets of dependencies available to tailor your installation to your use case. The base package will have sensible default, but you may want to install the PDF extra dependencies if your workflow uses PDFs with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">amazon-textract-textractor[pdf]</span></code>. You can read more on extra dependencies <a class="reference external" href="https://aws-samples.github.io/amazon-textract-textractor/installation.html">in the documentation</a></p>
-</section>
-<section id="Calling-Textract">
-<h2>Calling Textract<a class="headerlink" href="#Calling-Textract" title="Permalink to this heading"></a></h2>
+<p>There are various sets of dependencies available to tailor your installation to your use case. The base package will have sensible default, but you may want to install the PDF extra dependencies if you workflow uses PDFs with pip install amazon-textract-textractor[pdf]. You can read more on extra dependencies in the</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">textractor</span> <span class="kn">import</span> <span class="n">Textractor</span>
 
 <span class="n">extractor</span> <span class="o">=</span> <span class="n">Textractor</span><span class="p">(</span><span class="n">profile_name</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">)</span>
-<span class="c1"># This path assumes that you are running the notebook from docs/source/notebooks</span>
-<span class="n">document</span> <span class="o">=</span> <span class="n">extractor</span><span class="o">.</span><span class="n">detect_document_text</span><span class="p">(</span><span class="s2">&quot;../../../tests/fixtures/form.png&quot;</span><span class="p">)</span>
+
+<span class="n">document</span> <span class="o">=</span> <span class="n">extractor</span><span class="o">.</span><span class="n">analyze_expense</span><span class="p">(</span>
+    <span class="n">file_source</span><span class="o">=</span><span class="s2">&quot;../../../tests/fixtures/invoice.png&quot;</span><span class="p">,</span>
+    <span class="n">save_image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">document</span><span class="o">.</span><span class="n">visualize</span><span class="p">(</span><span class="n">with_words</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_using_analyze_expense_2_0.png" src="../_images/notebooks_using_analyze_expense_2_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">document</span>
@@ -413,37 +427,280 @@ div.rendered_html tbody tr:hover {
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 This document holds the following data:
 Pages - 1
-Words - 259
-Lines - 74
+Words - 98
+Lines - 48
 Key-values - 0
 Checkboxes - 0
 Tables - 0
+Queries - 0
+Signatures - 0
 Identity Documents - 0
+Expense Documents - 1
 </pre></div></div>
 </div>
 </section>
-<section id="Getting-the-trp2-document">
-<h2>Getting the trp2 document<a class="headerlink" href="#Getting-the-trp2-document" title="Permalink to this heading"></a></h2>
-<p>All <code class="docutils literal notranslate"><span class="pre">Document</span></code> objects have a convenience function <code class="docutils literal notranslate"><span class="pre">to_trp2()</span></code> that is a shorthand for <code class="docutils literal notranslate"><span class="pre">TDocumentSchema().load(document.response)</span></code> and creates a matching trp2 document. Note that this behaves as a converter, not as a proxy so any changes done on the <code class="docutils literal notranslate"><span class="pre">TDocument</span></code> will not be passed to the <code class="docutils literal notranslate"><span class="pre">Document</span></code> object.</p>
+<section id="Parsing-the-output">
+<h2>Parsing the output<a class="headerlink" href="#Parsing-the-output" title="Permalink to this heading"></a></h2>
+<p>The AnalyzeExpense API output is captured in the <code class="docutils literal notranslate"><span class="pre">expense_documents</span></code> entity list on the main document. There are two main components that make up an expense document: - The first one is the summary fields. These are Key Value pairs which are normalized to a list of specific fields. They are different than traditional key values because the key is optional. They also have a normalized type. The full list of which can be found in the API or in the <code class="docutils literal notranslate"><span class="pre">data.constants</span></code> file</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trp2_document</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">to_trp2</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">textractor.data.constants</span> <span class="kn">import</span> <span class="n">AnalyzeExpenseFields</span><span class="p">,</span> <span class="n">AnalyzeExpenseFieldsGroup</span><span class="p">,</span> <span class="n">AnalyzeExpenseLineItemFields</span>
 </pre></div>
 </div>
 </div>
-</section>
-<section id="Conclusion">
-<h2>Conclusion<a class="headerlink" href="#Conclusion" title="Permalink to this heading"></a></h2>
-<p>Textractor comes with everything you need to reuse components from your current workflow with the newer caller, pretty printer, or directional finder.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expense_doc</span> <span class="o">=</span> <span class="n">document</span><span class="o">.</span><span class="n">expense_documents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">expense_doc</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Summary fields: 20
+Line Item Groups: index 1: 3 rows
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expense_doc</span><span class="o">.</span><span class="n">summary_fields</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ADDRESS:
+    ADDRESS (BILL TO): John Smith\n2 Court Square\nNew York, NY 12210
+    ADDRESS (SHIP TO): John Smith\n3787 Pineview Drive\nCambridge, MA 12210
+    ADDRESS (FROM): East Repair Inc.\n1912 Harvest Lane\nNew York, NY 12210
+STREET:
+    STREET: 2 Court Square
+    STREET: 3787 Pineview Drive
+    STREET: 1912 Harvest Lane
+CITY:
+    CITY: New York,
+    CITY: Cambridge,
+    CITY: New York,
+STATE:
+    STATE: NY
+    STATE: MA
+    STATE: NY
+ZIP_CODE:
+    ZIP_CODE: 12210
+    ZIP_CODE: 12210
+    ZIP_CODE: 12210
+NAME:
+    NAME: John Smith
+    NAME: John Smith
+    NAME: East Repair Inc.
+    NAME (Please make checks payable to:): East Repair Inc.
+    NAME: LOGO
+ADDRESS_BLOCK:
+    ADDRESS_BLOCK: 2 Court Square\nNew York, NY 12210
+    ADDRESS_BLOCK: 3787 Pineview Drive\nCambridge, MA 12210
+    ADDRESS_BLOCK: 1912 Harvest Lane\nNew York, NY 12210
+DUE_DATE:
+    DUE_DATE (DUE DATE): 26/02/2019
+INVOICE_RECEIPT_DATE:
+    INVOICE_RECEIPT_DATE (INVOICE DATE): 11/02/2019
+INVOICE_RECEIPT_ID:
+    INVOICE_RECEIPT_ID (INVOICE #): US-001
+PO_NUMBER:
+    PO_NUMBER (P.O. #): 2312/2019
+PAYMENT_TERMS:
+    PAYMENT_TERMS (TERMS &amp; CONDITIONS): Payment is due within 15 days
+RECEIVER_ADDRESS:
+    RECEIVER_ADDRESS (BILL TO): John Smith\n2 Court Square\nNew York, NY 12210
+    RECEIVER_ADDRESS (SHIP TO): John Smith\n3787 Pineview Drive\nCambridge, MA 12210
+RECEIVER_NAME:
+    RECEIVER_NAME: John Smith
+    RECEIVER_NAME: John Smith
+SUBTOTAL:
+    SUBTOTAL (Subtotal): 145.00 [USD]
+TAX:
+    TAX (Sales Tax 6.25%): 9.06 [USD]
+TOTAL:
+    TOTAL (TOTAL): $154.06 [USD]
+VENDOR_ADDRESS:
+    VENDOR_ADDRESS (FROM): East Repair Inc.\n1912 Harvest Lane\nNew York, NY 12210
+VENDOR_NAME:
+    VENDOR_NAME (Please make checks payable to:): East Repair Inc.
+    VENDOR_NAME: East Repair Inc.
+    VENDOR_NAME: LOGO
+OTHER:
+    OTHER (Sales Tax): 6.25%
+</pre></div></div>
+</div>
+<p>The summary fields are also further grouped in semantic groups. For example, there can be several RECEIVER_ADDRESS, one for shipping and one for billing. They are accessed in the following property:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expense_doc</span><span class="o">.</span><span class="n">summary_groups</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+RECEIVER_BILL_TO:
+  ADDRESS (BILL TO): John Smith\n2 Court Square\nNew York, NY 12210
+  STREET: 2 Court Square
+  CITY: New York,
+  STATE: NY
+  ZIP_CODE: 12210
+  NAME: John Smith
+  ADDRESS_BLOCK: 2 Court Square\nNew York, NY 12210
+
+
+RECEIVER_SHIP_TO:
+  ADDRESS (SHIP TO): John Smith\n3787 Pineview Drive\nCambridge, MA 12210
+  STREET: 3787 Pineview Drive
+  CITY: Cambridge,
+  STATE: MA
+  ZIP_CODE: 12210
+  NAME: John Smith
+  ADDRESS_BLOCK: 3787 Pineview Drive\nCambridge, MA 12210
+
+
+VENDOR:
+  ADDRESS (FROM): East Repair Inc.\n1912 Harvest Lane\nNew York, NY 12210
+  STREET: 1912 Harvest Lane
+  CITY: New York,
+  STATE: NY
+  ZIP_CODE: 12210
+  NAME: East Repair Inc.
+  ADDRESS_BLOCK: 1912 Harvest Lane\nNew York, NY 12210
+
+  NAME (Please make checks payable to:): East Repair Inc.
+
+  NAME: LOGO
+
+
+</pre></div></div>
+</div>
+<ul class="simple">
+<li><p>The second main component of the analyze expense output are the line item groups</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expense_doc</span><span class="o">.</span><span class="n">line_items_groups</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[|QUANTITY: 1 | ITEM: Front and rear brake cables | UNIT_PRICE: 100.00 | PRICE: 100.00 | EXPENSE_ROW: 1 Front and rear brake cables 100.00 100.00 |
+ |QUANTITY: 2 | ITEM: New set of pedal arms | UNIT_PRICE: 15.00 | PRICE: 30.00 | EXPENSE_ROW: 2 New set of pedal arms 15.00 30.00 |
+ |QUANTITY: 3 | ITEM: Labor 3hrs | UNIT_PRICE: 5.00 | PRICE: 15.00 | EXPENSE_ROW: 3 Labor 3hrs 5.00 15.00 | ]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expense_doc</span><span class="o">.</span><span class="n">line_items_groups</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ITEM</th>
+      <th>PRICE</th>
+      <th>PRODUCT_CODE</th>
+      <th>QUANTITY</th>
+      <th>UNIT_PRICE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Front and rear brake cables</td>
+      <td>100.00</td>
+      <td></td>
+      <td>1</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>New set of pedal arms</td>
+      <td>30.00</td>
+      <td></td>
+      <td>2</td>
+      <td>15.00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Labor 3hrs</td>
+      <td>15.00</td>
+      <td></td>
+      <td>3</td>
+      <td>5.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<p>There are also summary fields that are normalized across these 5 fields.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
 </section>
 </section>
 
@@ -451,8 +708,8 @@ Identity Documents - 0
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="using_queries.html" class="btn btn-neutral float-left" title="Using Queries" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="signature_detection.html" class="btn btn-neutral float-right" title="Signature Detection" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="table_data_to_various_formats.html" class="btn btn-neutral float-left" title="Table data extraction to Excel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="using_analyze_id.html" class="btn btn-neutral float-right" title="Using AnalyzeID" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

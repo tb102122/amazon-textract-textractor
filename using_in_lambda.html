@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Using Textractor in AWS Lambda &mdash; amazon-textract-textractor 1.0.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
     <link rel="shortcut icon" href="_static/favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -30,11 +32,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> amazon-textract-textractor
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            amazon-textract-textractor
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -71,8 +77,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Using Textractor in AWS Lambda</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Using Textractor in AWS Lambda</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/using_in_lambda.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -129,7 +135,7 @@ policy. We recommend that you review your lambda function and tailor the permiss
 </ol>
 <img alt="_images/1b.png" src="_images/1b.png" />
 <ol class="loweralpha simple" start="3">
-<li><p>Scroll to the bottom of the page and download the package that matches your Python installation. Packages with the <cite>-pdf</cite> suffix contains <cite>pdf2image</cite> and allow you to process PDF documents.</p></li>
+<li><p>Scroll to the bottom of the page and download the package that matches your Python installation. Packages with the <cite>-pdfium</cite> suffix contain <cite>pypdfium2</cite> and allow you to process PDF documents. Packages with the <cite>-pdf</cite> suffix contain <cite>pdf2image</cite> and also allow you to process PDF documents, however we recommend using <cite>pypdfium2</cite> as it does not require any OS-level dependencies.</p></li>
 </ol>
 <img alt="_images/1c.png" src="_images/1c.png" />
 </li>
@@ -160,7 +166,7 @@ policy. We recommend that you review your lambda function and tailor the permiss
 </li>
 <li><p>Update your code to use Textractor</p>
 <ol class="loweralpha simple">
-<li><p>If using the PDF version you have to update the <cite>PATH</cite> and <cite>LD_LIBRARY_PATH</cite> environment variables through the lambda function configuration interface or directly in code with the <cite>os</cite> module:</p></li>
+<li><p>If using the <cite>pdf2image</cite> PDF version you have to update the <cite>PATH</cite> and <cite>LD_LIBRARY_PATH</cite> environment variables through the lambda function configuration interface or directly in code with the <cite>os</cite> module:</p></li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;LD_LIBRARY_PATH&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/opt/python/bin/:</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;LD_LIBRARY_PATH&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/opt/python/bin/:</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PATH&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>

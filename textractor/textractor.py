@@ -22,6 +22,7 @@ import os
 import boto3
 import logging
 import uuid
+from botocore.config import Config
 from PIL import Image
 from copy import deepcopy
 from typing import List, Union
@@ -79,6 +80,9 @@ class Textractor:
     :type profile_name: str, optional
     :param kms_key_id: Customer's AWS KMS key (cryptographic key)
     :type kms_key_id: str, optional
+    :param config: Optional botocore Config forwarded to the underlying boto3
+                   Textract and S3 clients, e.g. to customize retries or timeouts.
+    :type config: botocore.config.Config, optional
     """
 
     def __init__(
@@ -86,10 +90,12 @@ class Textractor:
         profile_name: str = None,
         region_name: str = None,
         kms_key_id: str = "",
+        config: Config = None,
     ):
         self.profile_name = profile_name
         self.region_name = region_name
         self.kms_key_id = kms_key_id
+        self.config = config
 
         if self.profile_name is not None:
             self.session = boto3.session.Session(profile_name=self.profile_name)
@@ -105,11 +111,11 @@ class Textractor:
             )
         if self.region_name is not None:
             self.textract_client = self.session.client(
-                "textract", region_name=self.region_name
+                "textract", region_name=self.region_name, config=self.config
             )
         else:
-            self.textract_client = self.session.client("textract")
-        self.s3_client = self.session.client("s3")
+            self.textract_client = self.session.client("textract", config=self.config)
+        self.s3_client = self.session.client("s3", config=self.config)
 
     def _get_document_images_from_path(self, filepath: str) -> List[Image.Image]:
         """

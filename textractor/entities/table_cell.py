@@ -25,6 +25,12 @@ from textractor.data.constants import (
     IS_SUMMARY_CELL,
     IS_TITLE_CELL,
     IS_FOOTER_CELL,
+    MERGED_CELL,
+    TABLE_COLUMN_HEADER,
+    TABLE_SECTION_TITLE,
+    TABLE_SUMMARY,
+    TABLE_TITLE,
+    TABLE_FOOTER,
 )
 from textractor.data.constants import TextTypes
 from textractor.utils.text_utils import TextLinearizationConfig, linearize_children
@@ -254,14 +260,12 @@ class TableCell(DocumentEntity):
         :param metadata: List of string types that match different cell types
         :type metadata: List
         """
-        self.metadata[IS_COLUMN_HEAD] = True if "COLUMN_HEADER" in metadata else False
-        self.metadata[IS_MERGED_CELL] = True if "MERGED_CELL" in metadata else False
-        self.metadata[IS_SECTION_TITLE_CELL] = (
-            True if "SECTION_TITLE" in metadata else False
-        )
-        self.metadata[IS_SUMMARY_CELL] = True if "SUMMARY_CELL" in metadata else False
-        self.metadata[IS_TITLE_CELL] = True if "FLOATING_TITLE" in metadata else False
-        self.metadata[IS_FOOTER_CELL] = True if "FLOATING_FOOTER" in metadata else False
+        self.metadata[IS_COLUMN_HEAD] = TABLE_COLUMN_HEADER in metadata
+        self.metadata[IS_MERGED_CELL] = MERGED_CELL in metadata
+        self.metadata[IS_SECTION_TITLE_CELL] = TABLE_SECTION_TITLE in metadata
+        self.metadata[IS_SUMMARY_CELL] = TABLE_SUMMARY in metadata
+        self.metadata[IS_TITLE_CELL] = TABLE_TITLE in metadata
+        self.metadata[IS_FOOTER_CELL] = TABLE_FOOTER in metadata
 
     def _get_merged_cell_range(self):
         """

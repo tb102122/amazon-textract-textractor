@@ -338,8 +338,8 @@ class Table(DocumentEntity):
         """
         Returns a dictionary of column_header (str) : List[TableCell] (in order).
 
-        :param cell_type: supports CellTypes.COLUMN_HEADER as of now, will support SECTION_TITLE, FLOATING_TITLE,
-                            FLOATING_FOOTER, SUMMARY_CELL in the future.
+        :param cell_type: One of CellTypes.COLUMN_HEADER, SECTION_TITLE, FLOATING_TITLE,
+                            FLOATING_FOOTER or SUMMARY_CELL.
         :type cell_type: CellTypes
 
         :return: {column_header (str) : List[TableCell]}

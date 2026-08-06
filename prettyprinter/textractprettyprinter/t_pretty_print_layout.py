@@ -1,6 +1,7 @@
 import os
 import warnings
 import logging
+import trp.trp2 as t2
 from trp.trp2 import TDocument
 from typing import List
 

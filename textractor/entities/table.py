@@ -1040,6 +1040,26 @@ class Table(DocumentEntity):
         
         return text, words
 
+    def to_list(self) -> List[List[str]]:
+        """Returns the table as a list of rows, each row being a list of the
+        cell text strings ordered left-to-right, top-to-bottom.
+
+        This is a lightweight alternative to :meth:`to_pandas` / :meth:`to_csv`
+        that has no third-party dependencies (no pandas), which is convenient in
+        constrained environments such as AWS Lambda. Empty cells are represented
+        by empty strings. Note that, unlike :meth:`to_pandas`, this method does
+        not apply merged-cell placeholder or duplication logic; each cell's raw
+        text is used as-is.
+
+        :return: Table contents as a nested list of strings.
+        :rtype: List[List[str]]
+        """
+        table = [["" for _ in range(self.column_count)] for _ in range(self.row_count)]
+        for cell in self.table_cells:
+            table[cell.row_index - 1][cell.col_index - 1] = cell.text
+
+        return table
+
     def to_txt(self):
         table = [["" for _ in range(self.column_count)] for _ in range(self.row_count)]
         for cell in self.table_cells:

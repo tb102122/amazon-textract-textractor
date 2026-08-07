@@ -11,12 +11,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Needed for the Deploy step to push to the gh-pages branch, as the default
+    # GITHUB_TOKEN is read-only.
+    permissions:
+      contents: write
 
     steps:
       # Checks out the repository
       - uses: actions/checkout@v3
-        with:
-          ref: 'master'
 
       - name: Install pandoc
         run: sudo apt-get install -y pandoc
@@ -52,8 +54,11 @@ jobs:
       - name: Build docs
         run: cd docs && make html
         
-      # Deploy
+      # Deploy (only on pushes to master; pull requests build the docs above
+      # to validate them but must not publish, and fork PRs only get a
+      # read-only token that cannot push to gh-pages).
       - name: Deploy
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

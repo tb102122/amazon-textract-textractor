@@ -3,5 +3,5 @@ pandas
 pdf2image>=1.16,<1.18
 pytest
 lxml
-sentence-transformers>=2.2,<2.3
+sentence-transformers>=3.0,<7
 sphinx-rtd-theme>=1.0,<1.1

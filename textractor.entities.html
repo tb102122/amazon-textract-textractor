@@ -400,6 +400,28 @@ key-values and checkboxes. The user can manipulate original data or produce a co
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="textractor.entities.document.Document.export_kv_to_pandas">
+<span class="sig-name descname"><span class="pre">export_kv_to_pandas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">drop_confidence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#textractor.entities.document.Document.export_kv_to_pandas" title="Permalink to this definition"></a></dt>
+<dd><p>Converts key-value pairs with optional confidence filtering into a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trim</strong> (<em>bool</em>) – Flag to trim whitespace and punctuation from key and value text. Default is True.</p></li>
+<li><p><strong>confidence_threshold</strong> (<em>float</em>) – Minimum confidence level required for a key-value pair to be included in the DataFrame. Default is 0.0.</p></li>
+<li><p><strong>drop_confidence</strong> (<em>bool</em>) – Flag to exclude the confidence column from the DataFrame. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A pandas DataFrame containing key-value pairs, and optionally their confidence scores.
+The DataFrame will have ‘Key’ and ‘Value’ columns, and a ‘Confidence’ column if <cite>drop_confidence</cite> is False.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="textractor.entities.document.Document.export_kv_to_txt">
 <span class="sig-name descname"><span class="pre">export_kv_to_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">include_kv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_checkboxes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Key-Values.txt'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#textractor.entities.document.Document.export_kv_to_txt" title="Permalink to this definition"></a></dt>
 <dd><p>Export key-value entities and checkboxes in txt format.</p>
@@ -849,7 +871,7 @@ but add &lt;html&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt; around the result and
 accessed, searched and exported the functions given below.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="textractor.entities.lazy_document.LazyDocument">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">textractor.entities.lazy_document.</span></span><span class="sig-name descname"><span class="pre">LazyDocument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="textractor.data.constants.html#textractor.data.constants.TextractAPI" title="textractor.data.constants.TextractAPI"><span class="pre">TextractAPI</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">textract_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">images</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">OutputConfig</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#textractor.entities.lazy_document.LazyDocument" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">textractor.entities.lazy_document.</span></span><span class="sig-name descname"><span class="pre">LazyDocument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="textractor.data.constants.html#textractor.data.constants.TextractAPI" title="textractor.data.constants.TextractAPI"><span class="pre">TextractAPI</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">textract_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s3_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">images</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">OutputConfig</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#textractor.entities.lazy_document.LazyDocument" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>LazyDocument is a proxy for Document when using the async APIs. It will not load the response until
 one if its property is used. You can access the underlying Document object using the document property.</p>
@@ -1300,20 +1322,6 @@ The <a class="reference internal" href="#textractor.entities.page.Page" title="t
 </dl>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="textractor.entities.page.Page.container_layouts">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">container_layouts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="textractor.visualizers.html#textractor.visualizers.entitylist.EntityList" title="textractor.visualizers.entitylist.EntityList"><span class="pre">EntityList</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#textractor.entities.layout.Layout" title="textractor.entities.layout.Layout"><span class="pre">Layout</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#textractor.entities.page.Page.container_layouts" title="Permalink to this definition"></a></dt>
-<dd><p>Returns all the container <code class="xref py py-class docutils literal notranslate"><span class="pre">Layout</span></code> objects present in the Page.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of Layout objects.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="textractor.visualizers.html#textractor.visualizers.entitylist.EntityList" title="textractor.visualizers.entitylist.EntityList">EntityList</a></p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="textractor.entities.page.Page.directional_finder">
 <span class="sig-name descname"><span class="pre">directional_finder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">word_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Direction.BELOW</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entities</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#textractor.entities.page.Page.directional_finder" title="Permalink to this definition"></a></dt>
@@ -1353,7 +1361,7 @@ key-values and checkboxes. The user can manipulate original data or produce a co
 
 <dl class="py method">
 <dt class="sig sig-object py" id="textractor.entities.page.Page.export_kv_to_csv">
-<span class="sig-name descname"><span class="pre">export_kv_to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">include_kv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_checkboxes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Key-Values.csv'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#textractor.entities.page.Page.export_kv_to_csv" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">export_kv_to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">include_kv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_checkboxes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Key-Values.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">','</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#textractor.entities.page.Page.export_kv_to_csv" title="Permalink to this definition"></a></dt>
 <dd><p>Export key-value entities and checkboxes in csv format.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1361,6 +1369,7 @@ key-values and checkboxes. The user can manipulate original data or produce a co
 <li><p><strong>include_kv</strong> (<em>bool</em>) – True if KVs are to be exported. Else False.</p></li>
 <li><p><strong>include_checkboxes</strong> (<em>bool</em>) – True if checkboxes are to be exported. Else False.</p></li>
 <li><p><strong>filepath</strong> (<em>str</em>) – Path to where file is to be stored.</p></li>
+<li><p><strong>sep</strong> (<em>str</em>) – Separator to be used in the csv file.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1518,20 +1527,6 @@ to lowest similarity.</p>
 <dt class="sig sig-object py" id="textractor.entities.page.Page.layouts">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">layouts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="textractor.visualizers.html#textractor.visualizers.entitylist.EntityList" title="textractor.visualizers.entitylist.EntityList"><span class="pre">EntityList</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#textractor.entities.layout.Layout" title="textractor.entities.layout.Layout"><span class="pre">Layout</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#textractor.entities.page.Page.layouts" title="Permalink to this definition"></a></dt>
 <dd><p>Returns all the <code class="xref py py-class docutils literal notranslate"><span class="pre">Layout</span></code> objects present in the Page.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>List of Layout objects.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="textractor.visualizers.html#textractor.visualizers.entitylist.EntityList" title="textractor.visualizers.entitylist.EntityList">EntityList</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="textractor.entities.page.Page.leaf_layouts">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">leaf_layouts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="textractor.visualizers.html#textractor.visualizers.entitylist.EntityList" title="textractor.visualizers.entitylist.EntityList"><span class="pre">EntityList</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#textractor.entities.layout.Layout" title="textractor.entities.layout.Layout"><span class="pre">Layout</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#textractor.entities.page.Page.leaf_layouts" title="Permalink to this definition"></a></dt>
-<dd><p>Returns all the leaf <code class="xref py py-class docutils literal notranslate"><span class="pre">Layout</span></code> objects present in the Page.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>List of Layout objects.</p>
@@ -1993,8 +1988,8 @@ No specific ordering is assumed since it is implicitly ordered by row and column
 <dd><p>Returns a dictionary of column_header (str) : List[TableCell] (in order).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>cell_type</strong> (<a class="reference internal" href="textractor.data.constants.html#textractor.data.constants.CellTypes" title="textractor.data.constants.CellTypes"><em>CellTypes</em></a>) – supports CellTypes.COLUMN_HEADER as of now, will support SECTION_TITLE, FLOATING_TITLE,
-FLOATING_FOOTER, SUMMARY_CELL in the future.</p>
+<dd class="field-odd"><p><strong>cell_type</strong> (<a class="reference internal" href="textractor.data.constants.html#textractor.data.constants.CellTypes" title="textractor.data.constants.CellTypes"><em>CellTypes</em></a>) – One of CellTypes.COLUMN_HEADER, SECTION_TITLE, FLOATING_TITLE,
+FLOATING_FOOTER or SUMMARY_CELL.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>{column_header (str) : List[TableCell]}</p>
@@ -2199,6 +2194,27 @@ FLOATING_FOOTER, SUMMARY_CELL in the future.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="textractor.entities.table.Table.to_list">
+<span class="sig-name descname"><span class="pre">to_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#textractor.entities.table.Table.to_list" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the table as a list of rows, each row being a list of the
+cell text strings ordered left-to-right, top-to-bottom.</p>
+<p>This is a lightweight alternative to <a class="reference internal" href="#textractor.entities.table.Table.to_pandas" title="textractor.entities.table.Table.to_pandas"><code class="xref py py-meth docutils literal notranslate"><span class="pre">to_pandas()</span></code></a> / <a class="reference internal" href="#textractor.entities.table.Table.to_csv" title="textractor.entities.table.Table.to_csv"><code class="xref py py-meth docutils literal notranslate"><span class="pre">to_csv()</span></code></a>
+that has no third-party dependencies (no pandas), which is convenient in
+constrained environments such as AWS Lambda. Empty cells are represented
+by empty strings. Note that, unlike <a class="reference internal" href="#textractor.entities.table.Table.to_pandas" title="textractor.entities.table.Table.to_pandas"><code class="xref py py-meth docutils literal notranslate"><span class="pre">to_pandas()</span></code></a>, this method does
+not apply merged-cell placeholder or duplication logic; each cell’s raw
+text is used as-is.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Table contents as a nested list of strings.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[List[str]]</p>
 </dd>
 </dl>
 </dd></dl>
